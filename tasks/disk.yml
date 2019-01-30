@@ -1,0 +1,17 @@
+---
+
+- name: "ensure directory where to store guests disk images exists on hypervisor/qemu host"
+  delegate_to: "{{ hypervisor }}"
+  file:
+    path: "{{ qemu_guest_disk_dir }}"
+    state: "directory"
+    mode: "0755"
+    owner: "root"
+    group: "root"
+
+- name: "create VM disk image on qemu hypervisor"
+  delegate_to: "{{ hypervisor }}"
+  shell: "qemu-img create -f {{ vm_disk_format }} {{ qemu_guest_disk_dir }}/{{ inventory_hostname }}.img {{ vm_disk_size }}"
+  args:
+    creates: "{{ qemu_guest_disk_dir }}/{{ inventory_hostname }}.img"
+

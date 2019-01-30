@@ -1,0 +1,36 @@
+---
+
+#
+# Hypervisor (qemu host) to use when creating Virtual machines :
+# You can/should set this on a per-vm basis, within your inventory.
+#
+hypervisor: "192.168.100.4"
+
+#
+# Default Virtual Machine parameters :
+#
+# Those are used when provisionning qemu virtual machine(s),
+# while inventory does not provide them for a given VM to provision.
+#
+vm_disk_size: "10G"
+vm_disk_format: "qcow2"
+vm_mem: "1024" # MBytes
+vm_vcpus: "1"
+vm_arch: "x86_64"
+vm_install_iso: "debian-9.5.0-amd64-netinst.iso"
+vm_domain_name: "p.s1.s18m2.com"
+vm_startup_timeout: 30
+
+# URL where our starting VM(s) will look for debian installer while booting:
+installer_location: "http://http.debian.net/debian/dists/stretch/main/installer-amd64/"
+
+# directory where to create QEMU VM disk images on qemu host :
+# This directory is created if not present.
+qemu_guest_disk_dir: "/srv/qemu/images"
+
+# root directory containing the 'preseed.cfg' file to use when provisionning VM(s) :
+# eg: for x86_64 vm_arch, pressed file is located under '/srv/qemu/preseed/x86_64/preseed.cfg' when
+# qemu_preseed_dir is set to '/srv/qemu/preseed'
+# ('preseed.cfg' filename can't be changed, otherwise it won't be used at all ; see debian preseed docs)
+qemu_preseed_dir: "/srv/qemu/preseed"
+

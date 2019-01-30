@@ -1,0 +1,18 @@
+#
+# you should set custom parameters on a per-vm basis here, otherwise defaults/ params are used.
+#
+
+# a sample "sub-group" of qemu guests to provision :
+[qemu_guests_k8smasters]
+vk8s01.p13.p.s18m2.com hypervisor="192.168.100.4" vm_disk_size="15G" vm_mem="2048" vm_vcpus="1" vm_install_iso="debian-9.5.0-amd64-netinst.iso"
+
+# another "sub-group" of qemu guests to provision :
+[qemu_guests_k8snodes]
+vk8s[02:04].p13.p.s18m2.com hypervisor="192.168.100.4" vm_disk_size="12G" vm_mem="1024" vm_vcpus="1" vm_install_iso="debian-9.5.0-amd64-netinst.iso"
+
+# the complete list of qemu guests to provision :
+# in this sample, all members of groups 'qemu_guests_k8smasters' and 'qemu_guests_k8snodes' are set:
+[qemu_guests:children]
+qemu_guests_k8smasters
+qemu_guests_k8snodes
+

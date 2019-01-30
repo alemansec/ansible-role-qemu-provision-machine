@@ -1,0 +1,37 @@
+---
+
+- name: "start VM"
+  delegate_to: "{{ hypervisor }}"
+  register: "vm_starting"
+  virt:
+    name: "{{ inventory_hostname }}"
+    state: "running"
+
+- name: "wait for VM to boot"
+  wait_for: timeout="{{ vm_startup_timeout }}"
+  delegate_to: "{{ hypervisor }}"
+  when: vm_starting is changed
+
+- name: "collect VM dynamic IPaddr"
+  delegate_to: "{{ hypervisor }}"
+  shell: "virsh domifaddr {{ inventory_hostname }} | grep ipv4 | awk '{ print $4; }' | cut -d '/' -f 1"
+  register: "vm_interfaces"
+  changed_when: false
+
+- debug: var="vm_interfaces"
+
+- name: "set_fact on IPaddr"
+  when: vm_interfaces.stdout != ""
+  set_fact:
+    ansible_ssh_host: "{{ vm_interfaces.stdout }}"
+
+#- debug: var="hostvars[ inventory_hostname ]['ansible_all_ipv4_addresses'][0]"
+
+- name: "wait for VM - wait for 5 minutes, checking after 2 seconds"
+  wait_for_connection:
+    delay: 2
+    timeout: 300
+
+#- name: "refresh/gather facts"
+#  setup:
+

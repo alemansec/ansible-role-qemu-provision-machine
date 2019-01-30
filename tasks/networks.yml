@@ -1,0 +1,13 @@
+---
+
+#- name: "create VM custom networks"
+#  when: false
+
+- name: "activate VM custom networks"
+  when: false
+  delegate_to: "{{ hypervisor }}"
+  virt_net:
+    state: "active"
+    name: "someVMnetwork"
+
+

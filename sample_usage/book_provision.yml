@@ -1,0 +1,11 @@
+---
+
+- name: "book_provision"
+  hosts: "qemu_guests"
+  gather_facts: false
+  serial: 1
+  max_fail_percentage: 0
+
+  roles:
+    - { role: "ansible-role-qemu-provision-machine" }
+

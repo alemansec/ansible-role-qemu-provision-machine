@@ -1,0 +1,12 @@
+---
+
+- name: "enable and start libvirtd service"
+  delegate_to: "{{ hypervisor }}"
+  service: name="libvirtd" state="started" enabled="yes"
+
+- name: "ensure libvirt 'default' net is started"
+  delegate_to: "{{ hypervisor }}"
+  virt_net:
+    name: "default"
+    state: "active"
+

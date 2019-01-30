@@ -1,0 +1,38 @@
+---
+
+- name: "test for existing VM"
+  delegate_to: "{{ hypervisor }}"
+  shell: "virsh dominfo {{ inventory_hostname }}"
+  register: "existing_vm"
+  failed_when: false
+  changed_when: false
+
+#- debug: var=existing_vm
+
+# we use virt-install because qemu won't allow us to pass auto_url= param without local kernel
+# or "--cdrom" to use local installer image
+#
+# --network bridge=brinfra0 \
+# --network network=pub_bridge \
+#
+# WARNING: 'default' libvirt network should be attached first (libvirt wont see vm IPaddr otherwise),
+# @TODO this should always be the case (we should check for it though)
+#
+- name: "define virtual machine"
+  delegate_to: "{{ hypervisor }}"
+  when: existing_vm.rc != 0
+  shell: "virt-install --connect qemu:///system \
+            --name {{ inventory_hostname }} \
+            --ram {{ vm_mem }} \
+            --vcpus {{ vm_vcpus }} \
+            --disk {{ qemu_guest_disk_dir }}/{{ inventory_hostname }}.img,format={{ vm_disk_format }},bus=virtio \
+            --network network=default \
+            --virt-type kvm \
+            --os-type=linux \
+            --os-variant debian9 \
+            --location {{ installer_location }} \
+            --initrd-inject={{ qemu_preseed_dir }}/{{ vm_arch }}/preseed.cfg \
+            --extra-args=\"auto=true hostname={{ inventory_hostname }} domain={{ vm_domain_name }}\" \
+            "
+
+

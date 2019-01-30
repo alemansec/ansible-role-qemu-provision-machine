@@ -1,0 +1,15 @@
+---
+
+# splitted into multiple files, so one can use 'task_from' directive within his playbooks.
+
+- include: "checks.yml"
+
+- include: "disk.yml"
+
+- include: "networks.yml"
+
+- include: "define.yml"
+
+- include: "start.yml"
+
+
