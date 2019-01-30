@@ -26,9 +26,9 @@ QEMU amd64 debian Virtual Machines provisionning using debian preseed mechanism.
 
 A usage sample is provided under ```sample_usage/```
 
-[sample playbook execution complete](sample-complete.png)
+![sample playbook execution complete](sample-complete.png?raw=true)
 
-[sample playbook virt-manager](sample-virt-manager.png)
+![sample playbook virt-manager](sample-virt-manager.png?raw=true)
 
 The provided ```ansible.cfg``` file uses the user account ```confmgmt``` to ssh into remote qemu hosts ; either ensure you previously ```ssh-copy-id confmgmt@your_remote_qemu_host``` or edit sample_usage/ansible.cfg accordiningly.
 
