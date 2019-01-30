@@ -1,6 +1,6 @@
 ---
 
-# splitted into multiple files, so one can use 'task_from' directive within his playbooks.
+# splitted into multiple files, so one can use 'tasks_from' directive within his playbooks.
 
 - include: "checks.yml"
 
