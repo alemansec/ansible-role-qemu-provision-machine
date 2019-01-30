@@ -45,4 +45,5 @@ This role depends on ```ansible-role-qemu-host``` separate ansible role (not act
 
 - [ ] include provisioned-VM(s) networking configuration in this role (when first implementing this, a later part of the actual playbooks were responsible for this step) ; right now provisionned VM(s) have dynamically-allocated IP addresses.
 - [ ] publish 'ansible-role-qemu-host' role.
+- [ ] set tags on every single task
 
